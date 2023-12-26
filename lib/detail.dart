@@ -7,32 +7,31 @@ import 'package:provider/provider.dart';
 import 'package:utswakhid1/main.dart';
 import 'package:utswakhid1/laporan.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Detail(),
-    );
-  }
-}
-
 class Detail extends StatelessWidget {
+  const Detail({super.key});
+  
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic>? args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+        if (args == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Error'),
+        ),
+        body: const Center(
+          child: Text('Failed to retrieve details'),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.push(
+            Navigator.pushNamed(
               context,
-              MaterialPageRoute(builder: (context) => Home()),
+              '/home',
             );
           },
         ),
@@ -63,7 +62,7 @@ class Detail extends StatelessWidget {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
                           child: Text(
-                            'Treadmill',
+                            args['name'],
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -84,8 +83,23 @@ class Detail extends StatelessWidget {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                          child: Text(
-                            'Treadmill adalah jenis alat gym yang didesain untuk mensimulasikan lari dan jalan di tempat dengan cara berlari atau berjalan di atas permukaan bergerak, dengan penggerak motor. Biasanya treadmill dipakai untuk latihan kebugaran, kardiovaskular, membakar kalori, serta Kesehatan secara keseluruhan.',
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Kategori:',
+                                style: TextStyle(
+                                  color: Colors
+                                      .blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                  height: 8),
+                              Text(
+                                args['kategori'],
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
@@ -159,10 +173,14 @@ class Detail extends StatelessWidget {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
+                              Navigator.pushNamed(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => Laporan()),
+                                '/laporan',
+                                arguments: {
+                                  'id': args['id'],
+                                  'name': args['name'],
+                                  'kategori': args['kategori'],
+                                },
                               );
                             },
                             style: ElevatedButton.styleFrom(

@@ -7,21 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:utswakhid1/scanqr.dart';
 import 'package:utswakhid1/main.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scan(),
-    );
-  }
-}
-
 class Scan extends StatelessWidget {
+  const Scan({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +18,9 @@ class Scan extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(builder: (context) => Home()),
+                '/home',
               );
             },
           ),

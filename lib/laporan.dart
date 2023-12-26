@@ -6,21 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:utswakhid1/detail.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Laporan(),
-    );
-  }
-}
-
 class Laporan extends StatefulWidget {
+  const Laporan({super.key});
   @override
   _LaporanState createState() => _LaporanState();
 }
@@ -60,16 +47,27 @@ class _LaporanState extends State<Laporan> {
 
   @override
   Widget build(BuildContext context) {
+        final Map<String, dynamic>? args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    if (args == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Error'),
+        ),
+        body: const Center(
+          child: Text('Failed to retrieve details'),
+        ),
+      );
+    }
+
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Detail()),
-            );
+          onPressed: () async {
+            Navigator.of(context).pop();
           },
         ),
         title: Text('Laporan Kerusakan', style: TextStyle(color: Colors.white)),
@@ -83,7 +81,7 @@ class _LaporanState extends State<Laporan> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
-                  'Threadmill',
+                  args['name'],
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -184,7 +182,6 @@ class _LaporanState extends State<Laporan> {
                 child: Text(
                   'Pernah Rusak Sebelumnya: $everDamaged',
                   style: TextStyle(
-                    // Ukuran font
                     fontWeight: FontWeight.w500,
                   ),
                 ),
