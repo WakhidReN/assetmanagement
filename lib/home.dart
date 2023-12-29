@@ -83,7 +83,7 @@ class Home extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 12), // Add some spacing
+        SizedBox(height: 12),
         // Search TextField
         Padding(
           padding: EdgeInsets.fromLTRB(15, 0, 15, 12),
@@ -103,7 +103,6 @@ class Home extends StatelessWidget {
                 suffixIcon: IconButton(
                   icon: Icon(Icons.search),
                   onPressed: () {
-                    // Handle search action
                     print('Search Button Clicked');
                   },
                 ),
